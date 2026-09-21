@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#005577</color>
+
+    <style name="Theme.Sbm" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">#005577</item>
+        <item name="android:colorPrimaryDark">#003B53</item>
+        <item name="android:colorAccent">#005577</item>
+    </style>
+
+    <style name="Theme.Sbm.Add" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#005577</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+</resources>

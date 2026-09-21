@@ -1,0 +1,26 @@
+Categories:
+  - Bookmark
+License: AGPL-3.0-only
+AuthorName: Spenser Truex
+WebSite: https://github.com/equwal/sbm
+SourceCode: https://github.com/equwal/sbm-android
+IssueTracker: https://github.com/equwal/sbm-android/issues
+Donate: https://ko-fi.com/truex
+
+AutoName: sbm bookmarks
+
+RepoType: git
+Repo: https://github.com/equwal/sbm-android.git
+
+Builds:
+  - versionName: 0.1.0
+    versionCode: 1
+    commit: v0.1.0
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 0.1.0
+CurrentVersionCode: 1

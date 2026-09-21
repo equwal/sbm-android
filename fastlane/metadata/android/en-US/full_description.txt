@@ -1,0 +1,17 @@
+sbm keeps your bookmarks in one plain text file, one bookmark per line: the address, a description and tags. This app brings that file to your phone.
+
+<b>Find a bookmark fast</b>
+Type a few letters. The search is fuzzy, as in fzf: the letters of each word must come in order, but not always together. Tap a bookmark to open it; press and hold to copy the address or share it. Text that is no bookmark opens as an address, or as a web search.
+
+<b>Add from any app</b>
+Share a page from your browser to sbm, add a description and tags, and save.
+
+<b>Sync, or keep your own file</b>
+Sign in to an sbm-sync server, and the app syncs with bm on your computers and with the sbm add-on for Firefox and Chrome. Bookmarks that you add or remove on one device are added or removed on the others.
+The server is free software, so you can run your own. The default server, sbm.subread.space, is a paid service after a free trial.
+Or do not sign in: open a bookmark file that Syncthing, git or a file app keeps on your phone.
+
+<b>Small and private</b>
+No ads, no analytics, no trackers, no Google libraries. The app uses the network only for sync, and only after you sign in.
+
+sbm is free software under the AGPL-3.0.
