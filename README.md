@@ -2,6 +2,11 @@
 
 Your [sbm](https://github.com/equwal/sbm) bookmarks on your phone.
 
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="270" alt="The list of bookmarks"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="270" alt="A search for unix">
+
+How sync looks between bm and the browser add-on:
+[demo, 80 seconds](https://github.com/equwal/sbm-sync#sbm-sync).
+
 - **Search as you type**, with the fuzzy match of fzf. Go opens the first
   match. Text that is no bookmark opens as an address, or as a web search,
   as in bm.
