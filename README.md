@@ -22,10 +22,9 @@ The bookmarks stay an sbm file: one bookmark per line,
 ## Sync
 
 In the menu, "Sign in to sync" uses https://sbm.subread.space unless you
-type another server. Create an account on the website of the server. The
-account on sbm.subread.space is free for 30 days, then $3 a month or $30 a
-year. Or [run your own server](https://github.com/equwal/sbm-sync): it is
-free software.
+type another server. Create an account on the website of the server. Sync on
+sbm.subread.space is free. You can also [run your own
+server](https://github.com/equwal/sbm-sync): it is free software.
 
 After a sign-in, the app syncs when you open it and after you add a
 bookmark. Without a file of your own, the app keeps the file in its own
