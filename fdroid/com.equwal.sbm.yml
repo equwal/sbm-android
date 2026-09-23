@@ -7,20 +7,25 @@ SourceCode: https://github.com/equwal/sbm-android
 IssueTracker: https://github.com/equwal/sbm-android/issues
 Donate: https://ko-fi.com/truex
 
-AutoName: sbm bookmarks
+AutoName: sbm
 
 RepoType: git
 Repo: https://github.com/equwal/sbm-android.git
+Binaries: https://github.com/equwal/sbm-android/releases/download/v%v/sbm-%v.apk
 
 Builds:
-  - versionName: 0.1.0
-    versionCode: 1
-    commit: v0.1.0
+  - versionName: 0.2.0
+    versionCode: 2
+    commit: b8575317360776d683106c59d67792ecccd7f77c
     subdir: app
     gradle:
       - yes
+    scandelete:
+      - app/.jqwik-database
+
+AllowedAPKSigningKeys: e8ae5352406e825443f210875192a2d654b3136b56a2a477ebd073ae34481904
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 0.1.0
-CurrentVersionCode: 1
+CurrentVersion: 0.2.0
+CurrentVersionCode: 2
