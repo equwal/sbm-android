@@ -56,5 +56,5 @@ The legal declarations are yours: read each answer before you submit it.
 
 ## Pricing
 
-Free. No in-app purchases. The app does not link to the paid plan of
-sbm.subread.space.
+Free. No in-app purchases. Sync on sbm.subread.space is free too. The app
+does not link to the payment pages of sbm.subread.space.
