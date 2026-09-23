@@ -25,6 +25,31 @@
         android:inputType="text|textNoSuggestions"
         android:singleLine="true" />
 
+    <!-- The live preview: the page of the first match, or of the bookmark
+         that the user picks with Preview. It shows only during a search.
+         MainActivity adds the web view under the caption when it is first
+         necessary, so that the app starts fast. -->
+    <LinearLayout
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:ellipsize="middle"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

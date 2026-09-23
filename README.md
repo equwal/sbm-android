@@ -10,6 +10,10 @@ How sync looks between bm and the browser add-on:
 - **Search as you type**, with the fuzzy match of fzf. Go opens the first
   match. Text that is no bookmark opens as an address, or as a web search,
   as in bm.
+- **Live preview:** while you search, the page of the first match shows
+  above the list. Press and hold a bookmark, then Preview, to see another
+  one. Tap the address above the preview to open the page. An http page
+  shows with https. Turn the preview off with Page preview in the menu.
 - **Tap to open**, press and hold to copy or share.
 - **Share to sbm** from any browser to add the page.
 - **Sync** with bm on your computers and the sbm add-on for Firefox and
@@ -32,9 +36,11 @@ storage.
 
 ## Privacy
 
-The app has no ads, no analytics and no trackers. It uses the network only
-for sync, after you sign in, and only with the server that you choose. See
-the [privacy policy](https://sbm.subread.space/privacy).
+The app has no ads, no analytics and no trackers. It uses the network for
+two things only. Sync, after you sign in, and only with the server that you
+choose. And the live preview, which loads the page of a bookmark from its
+site while you search, as a browser does; Page preview in the menu turns it
+off. See the [privacy policy](https://sbm.subread.space/privacy).
 
 ## Build
 

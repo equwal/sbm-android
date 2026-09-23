@@ -1,5 +1,6 @@
 package com.equwal.sbm
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -9,6 +10,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -17,19 +20,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
+import android.webkit.RenderProcessGoneDetail
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.BaseAdapter
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
 
-/** The list: search as you type, tap to open, press and hold for more. */
+/**
+ * The list: search as you type, tap to open, press and hold for more. During
+ * a search, the page of the first match shows live above the list.
+ */
 class MainActivity : Activity() {
     private lateinit var search: EditText
     private lateinit var empty: TextView
+    private lateinit var preview: LinearLayout
+    private lateinit var caption: TextView
     private val rows = Rows()
     private var all: List<Bookmark> = emptyList()
+    private var page: WebView? = null // made when the preview first shows
+    private var previewed: Bookmark? = null // the bookmark in the preview
+    private var picked: Bookmark? = null // the bookmark that the user picked with Preview
+    private var framed: String? = null // the address in the web view
+    private val later = Handler(Looper.getMainLooper())
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
@@ -38,6 +56,9 @@ class MainActivity : Activity() {
         setActionBar(toolbar)
         search = findViewById(R.id.search)
         empty = findViewById(R.id.empty)
+        preview = findViewById(R.id.preview)
+        caption = findViewById(R.id.caption)
+        caption.setOnClickListener { previewed?.let { open(it.url) } }
         val list = findViewById<ListView>(R.id.list)
         list.adapter = rows
         list.emptyView = empty
@@ -57,7 +78,10 @@ class MainActivity : Activity() {
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) = show()
+            override fun afterTextChanged(s: Editable?) {
+                picked = null
+                show()
+            }
         })
         search.setOnEditorActionListener { _, action, _ ->
             if (action == EditorInfo.IME_ACTION_GO) {
@@ -76,8 +100,20 @@ class MainActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
+        page?.onResume()
         load()
         if (Sync.signedIn(this)) sync(quiet = true)
+    }
+
+    override fun onPause() {
+        page?.onPause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        later.removeCallbacksAndMessages(null)
+        page?.destroy()
+        super.onDestroy()
     }
 
     /** Sync, then show the file again. A quiet sync reports only what the user must act on. */
@@ -134,6 +170,77 @@ class MainActivity : Activity() {
     private fun show() {
         rows.items = Fuzzy.filter(all, search.text.toString()) { "${it.desc} ${it.tags.joinToString(" ")} ${it.url}" }
         rows.notifyDataSetChanged()
+        showPage(picked ?: if (search.text.isBlank()) null else rows.items.firstOrNull())
+    }
+
+    private val settings get() = getSharedPreferences("settings", MODE_PRIVATE)
+    private val previewOn get() = settings.getBoolean("preview", true)
+
+    /**
+     * Show the page of [b] in the preview, or close the preview for null. The
+     * page loads only when [b] stays in the preview for a moment, so that
+     * fast typing does not load a page for each letter.
+     */
+    private fun showPage(b: Bookmark?) {
+        later.removeCallbacksAndMessages(null)
+        previewed = if (previewOn) b else null
+        val shown = previewed
+        if (shown == null) {
+            preview.visibility = View.GONE
+            loadPage(null)
+            return
+        }
+        preview.visibility = View.VISIBLE
+        val to = Preview.address(shown.url)
+        caption.text = to ?: getString(R.string.no_preview, shown.url)
+        if (to == null) loadPage(null) else later.postDelayed({ loadPage(to) }, PREVIEW_WAIT)
+    }
+
+    /** Load the page at [to] in the preview, or an empty page for null. */
+    private fun loadPage(to: String?) {
+        if (to == framed) return
+        framed = to
+        val view = page ?: if (to == null) return else newPage()
+        view.loadUrl(to ?: "about:blank")
+    }
+
+    /**
+     * A web view for the preview, under the caption. The page in it is only
+     * to look at: it runs its scripts, as in a browser, but it cannot take
+     * the focus from the search, open other apps or read the files of the
+     * app. Its links stay in the preview, and an http link loads with https.
+     */
+    @SuppressLint("SetJavaScriptEnabled") // Most pages need scripts to show, and the page gets no interface to the app.
+    private fun newPage(): WebView {
+        val view = WebView(this)
+        view.isFocusable = false
+        view.isFocusableInTouchMode = false
+        view.settings.javaScriptEnabled = true
+        view.settings.domStorageEnabled = true
+        view.settings.allowFileAccess = false
+        view.settings.allowContentAccess = false
+        view.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(v: WebView, request: WebResourceRequest): Boolean {
+                val url = request.url.toString()
+                val to = Preview.address(url) ?: return true
+                if (to == url) return false
+                v.loadUrl(to)
+                return true
+            }
+
+            // A page that stops the renderer must not stop the app: a new
+            // web view takes the place of the old one.
+            override fun onRenderProcessGone(v: WebView, detail: RenderProcessGoneDetail): Boolean {
+                preview.removeView(v)
+                v.destroy()
+                if (page === v) page = null
+                framed = null
+                return true
+            }
+        }
+        preview.addView(view, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
+        page = view
+        return view
     }
 
     /** Go opens the first bookmark. Without one, the text is an address or a web search, as in bm. */
@@ -154,16 +261,22 @@ class MainActivity : Activity() {
     }
 
     private fun more(b: Bookmark) {
-        val actions = arrayOf(getString(R.string.open), getString(R.string.copy), getString(R.string.share))
+        val actions = listOfNotNull(
+            getString(R.string.open) to { open(b.url) },
+            if (previewOn) {
+                getString(R.string.preview) to {
+                    picked = b
+                    show()
+                }
+            } else {
+                null
+            },
+            getString(R.string.copy) to { copy(b.url) },
+            getString(R.string.share) to { share(b) },
+        )
         AlertDialog.Builder(this)
             .setTitle(b.desc.ifEmpty { b.url })
-            .setItems(actions) { _, which ->
-                when (which) {
-                    0 -> open(b.url)
-                    1 -> copy(b.url)
-                    else -> share(b)
-                }
-            }
+            .setItems(actions.map { it.first }.toTypedArray()) { _, which -> actions[which].second() }
             .show()
     }
 
@@ -190,6 +303,7 @@ class MainActivity : Activity() {
         menu.findItem(R.id.sync_now).isVisible = on
         menu.findItem(R.id.sign_out).isVisible = on
         menu.findItem(R.id.sign_in).isVisible = !on
+        menu.findItem(R.id.preview_on).isChecked = previewOn
         // Google Play does not allow links to payments outside Google Play.
         menu.findItem(R.id.donate).isVisible = BuildConfig.DONATE
         return true
@@ -212,6 +326,12 @@ class MainActivity : Activity() {
             Sync.signOut(this)
             invalidateOptionsMenu()
             load()
+            true
+        }
+        R.id.preview_on -> {
+            settings.edit().putBoolean("preview", !previewOn).apply()
+            invalidateOptionsMenu()
+            show()
             true
         }
         R.id.donate -> {
@@ -261,6 +381,7 @@ class MainActivity : Activity() {
 
     private companion object {
         const val CHOOSE = 1
+        const val PREVIEW_WAIT = 400L // ms
         const val KOFI = "https://ko-fi.com/truex"
     }
 }

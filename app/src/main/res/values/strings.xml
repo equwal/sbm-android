@@ -6,6 +6,9 @@
     <string name="no_file">Sign in to sync with the menu. Or open your sbm bookmark file: Open file. To start a new file, use New file.</string>
     <string name="no_match">No bookmark matches. Press Go to search the web.</string>
     <string name="open">Open</string>
+    <string name="preview">Preview</string>
+    <string name="preview_on">Page preview</string>
+    <string name="no_preview">No preview: %1$s is not a web page</string>
     <string name="copy">Copy the URL</string>
     <string name="share">Share</string>
     <string name="copied">The URL is copied</string>
