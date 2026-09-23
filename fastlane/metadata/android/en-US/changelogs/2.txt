@@ -1,0 +1,2 @@
+Live preview: while you search, the page of the first match shows above the list. Press and hold a bookmark, then Preview, to see another one. Page preview in the menu turns it off.
+The default sync server is now sbmsync.com.
