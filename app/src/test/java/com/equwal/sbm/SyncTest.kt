@@ -13,4 +13,9 @@ class SyncTest {
         check(Sync.address("https://sbm.example.org") == "https://sbm.example.org")
         check(Sync.address("http://10.0.2.2:8750/") == "http://10.0.2.2:8750")
     }
+
+    @Example
+    fun `the default server is sbmsync dot com`() {
+        check(Sync.DEFAULT_SERVER == "https://sbmsync.com")
+    }
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
  * The server merges and sends back the file, which the app then writes.
  */
 object Sync {
-    const val DEFAULT_SERVER = "https://sbm.subread.space"
+    const val DEFAULT_SERVER = "https://sbmsync.com"
     private const val PREFS = "sync"
     private val worker by lazy { Executors.newSingleThreadExecutor() }
     private val main by lazy { Handler(Looper.getMainLooper()) }

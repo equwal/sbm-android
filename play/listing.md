@@ -21,11 +21,11 @@ The legal declarations are yours: read each answer before you submit it.
 - Category: Productivity
 - Contact email: truex@equwal.com
 - Website: https://github.com/equwal/sbm-android
-- Privacy policy: https://sbm.subread.space/privacy
+- Privacy policy: https://sbmsync.com/privacy
 
 ## App content
 
-- **Privacy policy:** https://sbm.subread.space/privacy
+- **Privacy policy:** https://sbmsync.com/privacy
 - **Ads:** no ads.
 - **App access:** some functions need an account (sync). Give the review
   account in `Desktop\sbm-android-signing\play-review-account.txt`, with
@@ -44,7 +44,7 @@ The legal declarations are yours: read each answer before you submit it.
     nothing.
   - Is all data encrypted in transit? Yes (HTTPS).
   - Can users ask for deletion of their data? Yes:
-    https://sbm.subread.space/privacy#delete
+    https://sbmsync.com/privacy#delete
   - Personal info, email address: collected, optional, for account
     management. Not shared.
   - App activity, other user-generated content (the bookmarks): collected,
@@ -52,9 +52,9 @@ The legal declarations are yours: read each answer before you submit it.
   - No location, no contacts, no device IDs, no crash logs, no analytics.
   - Data is collected only when the user signs in to sync.
 - **Account deletion:** users make accounts on the website, not in the app.
-  Deletion URL: https://sbm.subread.space/privacy#delete
+  Deletion URL: https://sbmsync.com/privacy#delete
 
 ## Pricing
 
-Free. No in-app purchases. Sync on sbm.subread.space is free too. The app
-does not link to the payment pages of sbm.subread.space.
+Free. No in-app purchases. Sync on sbmsync.com is free too. The app does
+not link to the payment pages of sbmsync.com.

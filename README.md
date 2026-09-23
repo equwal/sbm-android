@@ -25,9 +25,9 @@ The bookmarks stay an sbm file: one bookmark per line,
 
 ## Sync
 
-In the menu, "Sign in to sync" uses https://sbm.subread.space unless you
-type another server. Create an account on the website of the server. Sync on
-sbm.subread.space is free. You can also [run your own
+In the menu, "Sign in to sync" uses https://sbmsync.com unless you type
+another server. Create an account on the website of the server. Sync on
+sbmsync.com is free. You can also [run your own
 server](https://github.com/equwal/sbm-sync): it is free software.
 
 After a sign-in, the app syncs when you open it and after you add a
@@ -40,7 +40,7 @@ The app has no ads, no analytics and no trackers. It uses the network for
 two things only. Sync, after you sign in, and only with the server that you
 choose. And the live preview, which loads the page of a bookmark from its
 site while you search, as a browser does; Page preview in the menu turns it
-off. See the [privacy policy](https://sbm.subread.space/privacy).
+off. See the [privacy policy](https://sbmsync.com/privacy).
 
 ## Build
 

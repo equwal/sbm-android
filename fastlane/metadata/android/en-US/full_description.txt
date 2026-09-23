@@ -8,7 +8,7 @@ Share a page from your browser to sbm, add a description and tags, and save.
 
 <b>Sync, or keep your own file</b>
 Sign in to an sbm-sync server, and the app syncs with bm on your computers and with the sbm add-on for Firefox and Chrome. Bookmarks that you add or remove on one device are added or removed on the others.
-The server is free software, so you can run your own. Sync on the default server, sbm.subread.space, is free.
+The server is free software, so you can run your own. Sync on the default server, sbmsync.com, is free.
 Or do not sign in: open a bookmark file that Syncthing, git or a file app keeps on your phone.
 
 <b>Small and private</b>
