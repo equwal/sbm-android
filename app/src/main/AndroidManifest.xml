@@ -36,5 +36,10 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MoreAppsActivity"
+            android:exported="false"
+            android:label="@string/more_apps" />
     </application>
 </manifest>

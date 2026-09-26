@@ -306,6 +306,8 @@ class MainActivity : Activity() {
         menu.findItem(R.id.preview_on).isChecked = previewOn
         // Google Play does not allow links to payments outside Google Play.
         menu.findItem(R.id.donate).isVisible = BuildConfig.DONATE
+        // The Google Play build has no More apps either.
+        menu.findItem(R.id.more_apps).isVisible = BuildConfig.DONATE
         return true
     }
 
@@ -336,6 +338,10 @@ class MainActivity : Activity() {
         }
         R.id.donate -> {
             open(KOFI)
+            true
+        }
+        R.id.more_apps -> {
+            startActivity(Intent(this, MoreAppsActivity::class.java))
             true
         }
         R.id.open_file -> {
